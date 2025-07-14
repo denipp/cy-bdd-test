@@ -5,10 +5,6 @@ pipeline {
         ansiColor('xterm') 
     }
 
-    environment {
-        CYPRESS_CACHE_FOLDER = "${WORKSPACE}/cypress_cache"
-    }
-
     stages {
         stage('Install dependencies') {
             steps {
@@ -16,6 +12,7 @@ pipeline {
                      chcp 65001 > nul
                     npm install
                     npx cypress install
+                    npx cypress verify
                 '''
             }
         }
