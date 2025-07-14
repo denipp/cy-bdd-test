@@ -25,18 +25,17 @@ pipeline {
             }
         }
 
-        post {
-        always {
-            echo 'Generate report even if tests failed.'
-            publishHTML(target: [
-                allowMissing: true,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'mochawesome-report',
-                reportFiles: 'index.html',
-                reportName: 'Cypress Test Report'
-            ])
+        stage('Publish Report') {
+            steps {
+                publishHTML(target: [
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'mochawesome-report',
+                    reportFiles: 'index.html',
+                    reportName: 'Cypress Test Report'
+                ])
+            }
         }
-    }
     }
 }
