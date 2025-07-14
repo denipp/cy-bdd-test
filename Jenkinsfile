@@ -9,7 +9,7 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 bat '''
-                    chcp 65001 > nul
+                     chcp 65001 > nul
                     npm install
                     npx cypress install
                 '''
@@ -18,23 +18,14 @@ pipeline {
 
         stage('Run Cypress') {
             steps {
-                // Simpan hasil status agar pipeline tidak langsung gagal
-                script {
-                    try {
-                        bat '''
-                            chcp 65001 > nul
-                            npx cypress run --reporter mochawesome --reporter-options reportDir=mochawesome-report,overwrite=false,html=true,json=false
-                        '''
-                    } catch (Exception e) {
-                        echo "Cypress tests failed, but continuing to generate report."
-                        currentBuild.result = 'UNSTABLE'
-                    }
-                }
+                bat '''
+                     chcp 65001 > nul
+                    npx cypress run --reporter mochawesome --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=false
+                '''
             }
         }
-    }
 
-    post {
+        post {
         always {
             echo 'Generate report even if tests failed.'
             publishHTML(target: [
@@ -46,5 +37,6 @@ pipeline {
                 reportName: 'Cypress Test Report'
             ])
         }
+    }
     }
 }
