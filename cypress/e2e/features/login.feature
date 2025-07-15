@@ -8,7 +8,7 @@ Feature: SauceDemo Login
 
     Examples:
       | username                    | password     | outcome |
-      | standard_user               | secret_sauce | succsess |
+      | standard_user               | secret_sauce | success |
       | locked_out_user             | secret_sauce | failure |
       | invalid_user                | wrong_pass   | failure |
 
